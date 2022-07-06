@@ -1,0 +1,34 @@
+# Port configuration
+# Agent:
+#   - Admin API: 8000
+#   - HTTP inbound: 8001
+# Mediator:
+#   - Admin API: 9000
+#   - Websocket inbound: 9001
+#   - HTTP inbound: 9002
+
+version: "3.5"
+
+services:
+  agent:
+    platform: linux/arm64
+    build:
+      context: .
+      dockerfile: ./Dockerfile.agent
+    ports:
+      - "8000:8000"
+      - "8001:9000"
+    command: >-
+      aca-py start --arg-file /config.yml
+
+  mediator:
+    platform: linux/arm64
+    build:
+      context: .
+      dockerfile: ./Dockerfile.mediator
+    ports:
+      - "9000:8000"
+      - "9001:9000"
+      - "9002:9001"
+    command: >-
+      aca-py start --arg-file /config.yml

@@ -1,0 +1,52 @@
+# Admin
+admin: [0.0.0.0, 8000]
+
+endpoint:
+  - https://95.217.216.8:8001
+
+# Transport
+inbound-transport:
+  - [http, 0.0.0.0, 9000]
+outbound-transport:
+  - http
+  - ws
+
+admin-insecure-mode: true
+
+# Ledger
+genesis-url: http://test.bcovrin.vonx.io/genesis
+
+# Connections
+auto-accept-invites: true
+auto-accept-requests: true
+auto-ping-connection: true
+
+# Allow to create public did invitations
+public-invites: true
+
+# Credentials and Presentations
+preserve-exchange-records: true
+auto-store-credential: true
+auto-respond-credential-proposal: true
+auto-respond-credential-offer: true
+auto-respond-credential-request: true
+
+auto-respond-presentation-proposal: true
+auto-respond-presentation-request: true
+auto-verify-presentation: true
+
+# Wallet
+wallet-nam: default
+wallet-type: indy
+wallet-key: "33551baf-b7ef-412f-add9-c70c28b65bce"
+auto-provision: true
+
+# Enable undelivered queue
+# Important for communication with toolbox over http (as opposed to ws)
+enable-undelivered-queue: true
+
+# Logging
+log-level: DEBUG
+debug-connections: true
+debug-credentials: true
+debug-presentations: true

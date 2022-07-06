@@ -1,0 +1,41 @@
+# Admin
+admin: [0.0.0.0, 8000]
+admin-insecure-mode: true
+
+endpoint:
+  - https://95.217.216.8:9001
+  - wss://95.217.216.8:9002
+
+# Transport
+inbound-transport:
+  - [ws, 0.0.0.0, 9000]
+  - [http, 0.0.0.0, 9001]
+outbound-transport:
+  - http
+  - ws
+
+# Ledger
+no-ledger: true
+
+# Connections
+auto-accept-invites: true
+auto-accept-requests: true
+auto-ping-connection: true
+invite-multi-use: true
+
+# Allow to create public did invitations
+public-invites: true
+
+# Wallet
+wallet-name: default
+wallet-type: indy
+wallet-key: "94d3a024-365f-4ca3-977d-9d5ed997f6b0"
+auto-provision: true
+
+# Enable undelivered queue
+# Important for communication with toolbox over http (as opposed to ws)
+enable-undelivered-queue: true
+open-mediation: true
+
+log-level: DEBUG
+debug-connections: true

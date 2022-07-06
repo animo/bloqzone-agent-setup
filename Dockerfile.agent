@@ -1,0 +1,30 @@
+FROM bcgovimages/von-image:py36-1.16-0 AS base
+
+USER root
+
+WORKDIR /acapy
+
+# Clone the acapy plugin repo
+RUN git clone https://github.com/hyperledger/aries-acapy-plugin-toolbox
+
+# Install and Configure Poetry
+USER root
+ENV POETRY_VERSION=1.1.11
+ENV POETRY_HOME=/opt/poetry
+RUN curl -sSL https://install.python-poetry.org | python -
+
+ENV PATH="/opt/poetry/bin:$PATH"
+RUN poetry config virtualenvs.in-project true
+
+WORKDIR /acapy/aries-acapy-plugin-toolbox
+RUN poetry install --no-dev
+
+FROM bcgovimages/von-image:py36-1.16-0
+COPY --from=base --chown=indy:indy /acapy/aries-acapy-plugin-toolbox/.venv /home/indy/.venv
+ENV PATH="/home/indy/.venv/bin:$PATH"
+
+COPY config/agent-config.yml /config.yml
+
+# CMD ["aca-py", "start", "--arg-file=/config.yml"]
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl", "-X", "GET", "http://127.0.0.1:8000/status", "--fail" ]
